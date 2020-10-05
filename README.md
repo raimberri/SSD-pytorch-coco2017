@@ -10,7 +10,7 @@ Here is some information of working environments and final results:
 |:-:|:-:|:-:|
 |mAP | 1.8%   |     1.8% |
 ## Reference
-Code modified from:
-https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
-https://github.com/amdegroot/ssd.pytorch
+Code modified from:  
+https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection  
+https://github.com/amdegroot/ssd.pytorch  
 https://github.com/lufficc/SSD
