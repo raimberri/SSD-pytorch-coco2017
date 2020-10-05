@@ -16,6 +16,7 @@ from utils import transform
 # In[ ]:
 
 HOME = os.path.expanduser("~")
+# Modify the coco dataset path here
 COCO_ROOT = os.path.join(HOME, 'Documents/SSD-pytorch/data/')
 
 class AnnotationTransform(object):
