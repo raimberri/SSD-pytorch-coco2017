@@ -1,1 +1,1 @@
-download coco2017 dataset here
+Download coco2017 dataset here.
