@@ -19,7 +19,7 @@ HOME = os.path.expanduser("~")
 # Modify the coco dataset path here
 COCO_ROOT = os.path.join(HOME, 'Documents/SSD-pytorch/data/')
 
-class AnnotationTransform(object):
+'''class AnnotationTransform(object):
     """Transform a COCO annotation into a list of bbox parameters and category indices
     Args:
         output_size(tuple or int): Desired image crop size. Used to modified bbox parameters.
@@ -49,7 +49,7 @@ class AnnotationTransform(object):
             else:
                 print("no bbox exists!")
                 
-        return labels # [[cx, cy, w, h, category_id], ...]
+        return labels # [[cx, cy, w, h, category_id], ...]'''
         
 
 
