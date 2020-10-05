@@ -1,6 +1,6 @@
 # SSD-pytorch-coco2017
 SSD pytorch implementation for RA application.  
-Still have some structure issues, only have 1.8% mAP on both VGG-based and Resnet50-based networks.  
+Still have some structure issues, only have 1.8% mAP on VGG-based and 0.5% mAP on Resnet50-based networks.  
 Here is some information of working environments and final results:
 ## Environments
 1. Ubuntu 20.04
@@ -9,7 +9,7 @@ Here is some information of working environments and final results:
 ## Results
 |    | VGG126 | Resnet50 |
 |:-:|:-:|:-:|
-|mAP | 1.8%   |     1.8% |
+|mAP | 1.8%   |     0.5% |
 ## Reference
 Code modified from:  
 https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection  
