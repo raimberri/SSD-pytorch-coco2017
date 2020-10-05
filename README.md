@@ -7,5 +7,5 @@ Here is some information of working environments and final results:
 3. PyTorch 1.6.0
 ## Results
 |    | VGG126 | Resnet50 |
-|----|----|----|
+|:-:|:-:|:-:|
 |mAP | 1.8%   |     1.8% |
