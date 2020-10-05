@@ -1,5 +1,6 @@
 # SSD-pytorch-coco2017
-SSD pytorch implementation for RA application. Still have some structure issues, only have 1.8% mAP on both VGG-based and Resnet50-based networks.
+SSD pytorch implementation for RA application.  
+Still have some structure issues, only have 1.8% mAP on both VGG-based and Resnet50-based networks.  
 Here is some information of working environments and final results:
 ## Environments
 1. Ubuntu 20.04
