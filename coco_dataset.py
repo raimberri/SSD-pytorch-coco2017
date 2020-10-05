@@ -17,7 +17,7 @@ from utils import transform
 
 HOME = os.path.expanduser("~")
 # Modify the coco dataset path here
-COCO_ROOT = os.path.join(HOME, 'Documents/SSD-pytorch/data/')
+COCO_ROOT = os.path.join(HOME, 'Documents/SSD-pytorch-coco2017/data/')
 
 '''class AnnotationTransform(object):
     """Transform a COCO annotation into a list of bbox parameters and category indices
