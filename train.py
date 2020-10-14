@@ -156,7 +156,7 @@ def main():
         adjust_learning_rate(optimizer, 0.2)'''
 
     model = model.to(device)
-    criterion = MultiBoxLoss(priors_cxcy = model.priors_cxcy).to(device)
+    criterion = MultiBoxLoss(priors_cxcy = model.priors_cxcy, use_ellipse = True).to(device)
     
     # Dataloaders
     train_dataset = CocoDetectionForSSD(root=path2data, annFile=path2json, transform=None, target_transform=None, split='TRAIN')
