@@ -2,7 +2,7 @@
 SSD pytorch implementation for RA application.  
 Still have some structure issues, only have 1.8% mAP on VGG-based and 0.5% mAP on Resnet50-based networks.  
 **Updated:**  
-Add oval anchors modification in util.py and model.py
+Add oval anchors modification in util.py and model.py.  
 Here is some information of working environments and final results:
 ## Environments
 1. Ubuntu 20.04
