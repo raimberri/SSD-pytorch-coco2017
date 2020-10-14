@@ -486,10 +486,15 @@ class MultiBoxLoss(nn.Module):
     The MultiBox loss is the combination of localization loss and confidence loss
     """
     
-    def __init__(self, priors_cxcy, threshold = 0.5, neg_pos_ratio = 3, alpha = 1.0):
+    def __init__(self, priors_cxcy, threshold = 0.5, neg_pos_ratio = 3, alpha = 1.0, use_ellipse = False):
         super(MultiBoxLoss, self).__init__()
         self.priors_cxcy = priors_cxcy
-        self.priors_xy = cxcy_to_xy(priors_cxcy)
+        self.use_ellipse = use_ellipse
+        if use_ellipse:
+            cxy1 = priors_cxcy.cpu()
+            self.priors_xy = create_ellipse_vectorized(cxy1[:,0],cxy1[:,1],cxy1[:,2]/2,cxy1[:,3]/2)
+        else:
+            self.priors_xy = cxcy_to_xy(priors_cxcy)
         self.threshold = threshold
         self.neg_pos_ratio = neg_pos_ratio
         self.alpha = alpha
@@ -516,7 +521,10 @@ class MultiBoxLoss(nn.Module):
         for i in range(batch_size):
             n_objects = boxes[i].size(0)
             
-            overlap = find_jaccard_overlap(boxes[i], self.priors_xy) # (n_objects, 8732)
+            if self.use_ellipse:
+                overlap = find_jaccard_overlap_ellipse(boxes[i], self.priors_xy)
+            else:
+                overlap = find_jaccard_overlap(boxes[i], self.priors_xy)
             
             # For each prior, find the object with the maximum overlap
             overlap_for_each_prior, object_index_for_each_prior = overlap.max(dim = 0) # (8732)
