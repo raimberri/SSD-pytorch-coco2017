@@ -11,7 +11,12 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import numpy as np
 import math
-
+from shapely.geometry.point import Point
+from shapely import affinity
+import pygeos
+from pygeos.measurement import bounds
+from pygeos.measurement import area
+from pygeos.set_operations import intersection
 
 # In[2]:
 
@@ -111,6 +116,50 @@ def find_jaccard_overlap(set_1, set_2):
     
     return intersection / (union + 1e-10)
 
+ def create_ellipse(cx, cy, w, h):
+    circ = Point((cx, cy)).buffer(1)
+    ell = affinity.scale(circ, w, h)
+    ell = ell.buffer(0)
+    #ell = pygeos.io.from_shapely(ell)
+    return ell
+create_ellipse_vectorized = np.vectorize(create_ellipse)
+
+def intersects(ells1, ells2):
+    #return (ells1 & ells2).area
+    return ells1.intersection(ells2).area
+intersects_vectorized = np.vectorize(intersects)
+
+
+def find_jaccard_overlap_ellipse(set_1, set_2):
+    cxy1 = xy_to_cxcy(set_1).cpu()
+    #cxy2 = xy_to_cxcy(set_2).cpu()
+    ells1 = create_ellipse_vectorized(cxy1[:,0],cxy1[:,1],cxy1[:,2]/2,cxy1[:,3]/2)
+    ells2 = set_2
+    #ells2 = create_ellipse_vectorized(cxy2[:,0],cxy2[:,1],cxy2[:,2]/2,cxy2[:,3]/2)
+    ells1 = pygeos.io.from_shapely(ells1)
+    ells2 = pygeos.io.from_shapely(ells2)
+    inter_area = np.zeros((ells1.shape[0], ells2.shape[0]), dtype = np.float32)
+    # Rtree
+    tree = pygeos.STRtree(ells1)
+    idx = tree.query_bulk(ells2, predicate='intersects').tolist()
+    inter_area[idx[1], idx[0]] = area(intersection(ells1[idx[1]], ells2[idx[0]]))
+    '''idx = index.Index()
+    for pos, cell in enumerate(ells1):
+        idx.insert(pos, bounds(cell).tolist())
+
+    for i, poly in enumerate(ells2):
+        r = idx.intersection(bounds(poly).tolist())
+        x = list(r)
+        inter_area[x,i] = area(intersection(ells1[x], poly))'''
+    #inter = intersection(ells1[:, np.newaxis], ells2)
+    #inter_area = area(inter)
+    b1_area = area(ells1)
+    b2_area = area(ells2)
+    union = b1_area[:,np.newaxis] + b2_area
+    iou = inter_area / (union - inter_area + 1e-16)
+    iou = torch.Tensor(iou).to(device)
+    
+    return iou
 
 # In[6]:
 
